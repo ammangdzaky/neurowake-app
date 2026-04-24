@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/title_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Alarm"
+            android:textColor="@color/accent_cyan"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Card Waktu yang Lebih Besar -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/bg_surface"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/accent_cyan"
+            app:layout_constraintTop_toBottomOf="@id/title_add">
+
+            <LinearLayout
+                android:id="@+id/btn_click_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/tv_display_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="64sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap to change time"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/label_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Alarm Label"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/card_time_picker"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_alarm_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Wake up!"
+            android:textColor="@color/white"
+            android:textColorHint="@color/text_secondary"
+            android:background="@drawable/edittext_outline"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/label_name" />
+
+        <TextView
+            android:id="@+id/label_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Category"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/edit_alarm_name"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="@color/bg_surface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintTop_toBottomOf="@id/label_category">
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="8dp"
+                android:backgroundTint="@color/accent_cyan" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/label_difficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Challenge Mode"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/card_spinner"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rg_difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_outline"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/label_difficulty">
+
+            <RadioButton
+                android:id="@+id/rb_easy"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Easy"
+                android:checked="true"
+                android:textColor="@color/white"
+                android:buttonTint="@color/accent_cyan" />
+
+            <RadioButton
+                android:id="@+id/rb_hard"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Hard"
+                android:textColor="@color/white"
+                android:buttonTint="@color/accent_cyan" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_save_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="24dp"
+            android:text="SAVE ALARM"
+            android:textColor="@color/bg_dark"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/accent_cyan"
+            app:layout_constraintTop_toBottomOf="@id/rg_difficulty"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

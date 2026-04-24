@@ -1,0 +1,36 @@
+# Android Studio / IntelliJ
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Build artifacts
+bin/
+gen/
+out/
+app/build/
+
+# Gradle
+.gradle/
+build/
+
+# Log files
+*.log
+
+# Sensitive info
+secrets.xml
+google-services.json
+
+# Screenshots (optional, but keep if you want to push them)
+# !screenshots/
