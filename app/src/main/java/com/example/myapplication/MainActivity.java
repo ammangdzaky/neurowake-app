@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -28,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // MULAI URUTAN PERIZINAN 3 TAHAP
+        showPermissionDialogTier1();
 
         recyclerViewAlarms = findViewById(R.id.recyclerViewAlarms);
         recyclerViewAlarms.setLayoutManager(new LinearLayoutManager(this));
@@ -58,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
             position -> {
                 new MaterialAlertDialogBuilder(MainActivity.this)
                         .setTitle("Hapus Alarm")
-                        .setMessage("Hapus alarm ini?")
+                        .setMessage("Apakah Anda yakin ingin menghapus alarm ini?")
                         .setPositiveButton("Hapus", (dialog, which) -> {
                             alarmList.remove(position);
                             FileHelper.saveAlarmList(alarmList, MainActivity.this);
                             adapter.notifyDataSetChanged();
-                            Toast.makeText(MainActivity.this, "Alarm dihapus permanen", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Alarm berhasil dihapus", Toast.LENGTH_SHORT).show();
                         })
                         .setNegativeButton("Batal", null)
                         .show();
@@ -93,19 +100,79 @@ public class MainActivity extends AppCompatActivity {
         btnStats.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AnalyticsActivity.class)));
         btnProfile.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
         
-        // MODIFIKASI TOMBOL INFO: Menampilkan Dialog Keren dengan Link GitHub Spesifik
         btnInfo.setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(MainActivity.this)
-                    .setTitle("NeuroWake v1.0")
+                    .setTitle("Tentang NeuroWake")
                     .setIcon(R.drawable.ic_info_circle)
-                    .setMessage("NeuroWake is an advanced alarm system designed to ensure you wake up with a clear and active mind.\n\nDeveloped by: Abdurrahman Dzaky Safrullah")
-                    .setNeutralButton("Source Code", (dialog, which) -> {
+                    .setMessage("NeuroWake adalah sistem alarm cerdas yang dirancang untuk memastikan Anda bangun dengan pikiran yang segar dan aktif.\n\nDikembangkan oleh: Abdurrahman Dzaky Safrullah")
+                    .setNeutralButton("Lihat Kode Sumber", (dialog, which) -> {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ammangdzaky/neurowake-app"));
                         startActivity(intent);
                     })
-                    .setPositiveButton("Awesome!", null)
+                    .setPositiveButton("Mantap!", null)
                     .show();
         });
+    }
+
+    // --- LOGIKA PERIZINAN 3 TAHAP ---
+
+    private void showPermissionDialogTier1() {
+        SharedPreferences prefs = getSharedPreferences("NeuroWakePrefs", MODE_PRIVATE);
+        if (!prefs.getBoolean("PERMISSIONS_FINALIZED", false)) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Izin Penting Diperlukan")
+                    .setMessage("Agar NeuroWake bisa membangunkan Anda otomatis saat layar mati, kami butuh satu izin kecil:\n\n1. Klik 'Buka Pengaturan'.\n2. Pilih 'Perizinan Lainnya'.\n3. Ceklis 'Tampil di Jendela' atau 'Layar Kunci'.")
+                    .setCancelable(false)
+                    .setPositiveButton("Buka Pengaturan", (dialog, which) -> {
+                        openAppSettings();
+                    })
+                    .setNegativeButton("Sudah Saya Izinkan", (dialog, which) -> {
+                        showPermissionDialogTier2();
+                    })
+                    .show();
+        }
+    }
+
+    private void showPermissionDialogTier2() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Yakin Deck?")
+                .setMessage("Nanti kalau alarmnya nggak bunyi karena perizinannya belum aktif, jangan salahkan NeuroWake ya kalau kamu telat kuliah/kerja! 🥺")
+                .setCancelable(false)
+                .setPositiveButton("Buka Pengaturan", (dialog, which) -> {
+                    openAppSettings();
+                })
+                .setNegativeButton("Sudah Kok!", (dialog, which) -> {
+                    showPermissionDialogTier3();
+                })
+                .show();
+    }
+
+    private void showPermissionDialogTier3() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Emang Ea?")
+                .setMessage("Emang ea sudah diaktifkan? Kasih izin dulu dong biar NeuroWake makin jago jagain kamu! 🙏\n\nSetelah ini kami nggak akan tanya lagi, janji!")
+                .setCancelable(false)
+                .setPositiveButton("Buka Pengaturan", (dialog, which) -> {
+                    openAppSettings();
+                })
+                .setNegativeButton("Oke, Paham!", (dialog, which) -> {
+                    // Tandai bahwa user sudah melewati semua tahap, jangan tanya lagi selamanya.
+                    getSharedPreferences("NeuroWakePrefs", MODE_PRIVATE)
+                            .edit().putBoolean("PERMISSIONS_FINALIZED", true).apply();
+                    Toast.makeText(this, "NeuroWake Siap Beraksi!", Toast.LENGTH_SHORT).show();
+                })
+                .show();
+    }
+
+    private void openAppSettings() {
+        // Setelah klik buka pengaturan, kita anggap user akan mengaktifkannya, 
+        // jadi kita jangan munculkan lagi dialognya nanti.
+        getSharedPreferences("NeuroWakePrefs", MODE_PRIVATE)
+                .edit().putBoolean("PERMISSIONS_FINALIZED", true).apply();
+        
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
     }
 
     @Override

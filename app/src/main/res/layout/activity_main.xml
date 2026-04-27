@@ -29,13 +29,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Your Alarms"
+            android:text="Alarm Anda"
             android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Quick Navigation Icons (UPDATED MODERN DESIGN) -->
+    <!-- Quick Navigation Icons -->
     <LinearLayout
         android:id="@+id/layout_nav"
         android:layout_width="match_parent"

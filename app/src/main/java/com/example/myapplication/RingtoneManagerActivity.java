@@ -35,7 +35,6 @@ public class RingtoneManagerActivity extends AppCompatActivity {
         
         ringtoneList = FileHelper.readRingtonesFull(this);
 
-        // Tambahkan listener ketiga untuk menyimpan setiap kali ada perubahan ceklis
         adapter = new RingtoneAdapter(ringtoneList, uri -> playPreview(uri), () -> {
             FileHelper.saveRingtones(ringtoneList, RingtoneManagerActivity.this);
         });
@@ -53,7 +52,7 @@ public class RingtoneManagerActivity extends AppCompatActivity {
                 ringtoneList.remove(position);
                 adapter.notifyItemRemoved(position);
                 FileHelper.saveRingtones(ringtoneList, RingtoneManagerActivity.this);
-                Toast.makeText(RingtoneManagerActivity.this, "Lagu dihapus", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RingtoneManagerActivity.this, "Lagu berhasil dihapus", Toast.LENGTH_SHORT).show();
             }
         };
         new ItemTouchHelper(swipeCallback).attachToRecyclerView(rvRingtones);
@@ -106,8 +105,9 @@ public class RingtoneManagerActivity extends AppCompatActivity {
             previewPlayer.setDataSource(this, Uri.parse(uriString));
             previewPlayer.prepare();
             previewPlayer.start();
+            Toast.makeText(this, "Memutar pratinjau...", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(this, "Error playing file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Gagal memutar audio", Toast.LENGTH_SHORT).show();
         }
     }
 

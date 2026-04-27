@@ -97,7 +97,7 @@ public class AddAlarmActivity extends AppCompatActivity {
                 String name = editAlarmName.getText().toString();
                 String category = spinnerCategory.getSelectedItem().toString();
 
-                if (name.isEmpty()) name = "Wake up!";
+                if (name.isEmpty()) name = "Bangun woi!";
 
                 String difficulty = "Easy";
                 if (rgDifficulty.getCheckedRadioButtonId() == R.id.rb_hard) {

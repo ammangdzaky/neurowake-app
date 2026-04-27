@@ -63,7 +63,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String channelId = "UPCOMING_ALARM_CHANNEL";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, "Upcoming Alarms", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel channel = new NotificationChannel(channelId, "Notifikasi Alarm", NotificationManager.IMPORTANCE_LOW);
             manager.createNotificationChannel(channel);
         }
 
@@ -74,11 +74,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-                .setContentTitle("Upcoming Alarm")
-                .setContentText("Alarm set for " + time)
+                .setContentTitle("Alarm Mendatang")
+                .setContentText("Alarm diatur untuk jam " + time)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setOngoing(true) // Notifikasi tidak bisa di-swipe/dihilangkan paksa
-                .addAction(android.R.drawable.ic_menu_close_clear_cancel, "Dismiss for today", skipPendingIntent)
+                .setOngoing(true) 
+                .addAction(android.R.drawable.ic_menu_close_clear_cancel, "Lewati untuk hari ini", skipPendingIntent)
                 .setAutoCancel(true);
 
         manager.notify(UPCOMING_NOTIFICATION_ID, builder.build());
@@ -97,7 +97,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(UPCOMING_NOTIFICATION_ID);
         
-        android.widget.Toast.makeText(context, "Alarm for today skipped", android.widget.Toast.LENGTH_SHORT).show();
+        android.widget.Toast.makeText(context, "Alarm untuk hari ini dilewati", android.widget.Toast.LENGTH_SHORT).show();
     }
 
     private String normalizeTime(String time) {

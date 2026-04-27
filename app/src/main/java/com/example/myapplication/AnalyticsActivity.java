@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,17 +36,16 @@ public class AnalyticsActivity extends AppCompatActivity {
         loadLogs();
 
         btnClearLogs.setOnClickListener(v -> {
-            new androidx.appcompat.app.AlertDialog.Builder(this)
-                    .setTitle("Clear History")
-                    .setMessage("Are you sure you want to delete all wake-up logs?")
-                    .setPositiveButton("Yes, Clear", (dialog, which) -> {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Hapus Riwayat")
+                    .setMessage("Yakin mau hapus semua log bangun kamu? Nanti statistiknya hilang lho!")
+                    .setPositiveButton("Ya, Hapus", (dialog, which) -> {
                         clearAllLogs();
                     })
-                    .setNegativeButton("Cancel", null)
+                    .setNegativeButton("Batal", null)
                     .show();
         });
 
-        // Fitur Info Detail Rank saat Card dipencet
         cardRank.setOnClickListener(v -> {
             showRankInfoDialog();
         });
@@ -68,12 +68,13 @@ public class AnalyticsActivity extends AppCompatActivity {
         int total = logList.size();
         tvTotalCount.setText(String.valueOf(total));
 
+        // RANK STATUS DENGAN UNSUR MEME
         String rank;
-        if (total == 0) rank = "Newbie";
-        else if (total < 5) rank = "Starter";
-        else if (total < 15) rank = "Consistent";
-        else if (total < 30) rank = "Early Bird";
-        else rank = "Master";
+        if (total == 0) rank = "Beban Keluarga";
+        else if (total < 5) rank = "Mulai Sadar";
+        else if (total < 15) rank = "Pejuang Subuh";
+        else if (total < 30) rank = "Sepuh Pagi";
+        else rank = "Legend Pagi";
         
         tvDisciplineLevel.setText(rank);
 
@@ -83,25 +84,25 @@ public class AnalyticsActivity extends AppCompatActivity {
     }
 
     private void showRankInfoDialog() {
-        String infoMessage = "Tingkatkan kedisiplinan Anda untuk meraih rank tertinggi:\n\n" +
-                "• NEWBIE: 0 Wakeups\n" +
-                "• STARTER: 1-4 Wakeups\n" +
-                "• CONSISTENT: 5-14 Wakeups\n" +
-                "• EARLY BIRD: 15-29 Wakeups\n" +
-                "• MASTER: 30+ Wakeups\n\n" +
-                "Setiap Anda berhasil mematikan alarm, skor akan bertambah!";
+        String infoMessage = "Tingkatkan rank kamu biar makin jago:\n\n" +
+                "• BEBAN KELUARGA: 0 Bangun\n" +
+                "• MULAI SADAR: 1-4 Bangun\n" +
+                "• PEJUANG SUBUH: 5-14 Bangun\n" +
+                "• SEPUH PAGI: 15-29 Bangun\n" +
+                "• LEGEND PAGI: 30+ Bangun\n\n" +
+                "Jangan malas ya, biar rank-nya nggak stuck!";
 
-        new androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle("🏆 Rank Information")
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("🏆 Info Peringkat")
                 .setMessage(infoMessage)
-                .setPositiveButton("I UNDERSTAND", null)
+                .setPositiveButton("SIAP BOS!", null)
                 .show();
     }
 
     private void clearAllLogs() {
         try (FileOutputStream fos = openFileOutput("discipline_logs.txt", MODE_PRIVATE)) {
             fos.write("".getBytes());
-            Toast.makeText(this, "All logs cleared!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Log sudah bersih!", Toast.LENGTH_SHORT).show();
             loadLogs();
         } catch (Exception e) {
             e.printStackTrace();

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @NonNull
     @Override
     public AlarmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_alarm, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_alarm, parent, false);
         return new AlarmViewHolder(view);
     }
 
@@ -56,18 +57,45 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         holder.labelText.setText(currentAlarm.getLabel());
         holder.categoryText.setText(currentAlarm.getCategory());
 
-        // Hapus listener untuk mencegah trigger otomatis saat binding
+        // Status visual: Aktif hanya jika isActive TRUE DAN isSkipped FALSE
+        boolean isUiActive = currentAlarm.isActive() && !currentAlarm.isSkipped();
+        
         holder.switchAlarm.setOnCheckedChangeListener(null);
-        holder.switchAlarm.setChecked(currentAlarm.isActive());
+        holder.switchAlarm.setChecked(isUiActive);
+        updateUiColors(holder, isUiActive);
 
-        // Atur warna berdasarkan status
-        updateUiColors(holder, currentAlarm.isActive());
-
-        holder.switchAlarm.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            currentAlarm.setActive(isChecked);
-            updateUiColors(holder, isChecked);
-            if (statusListener != null) {
-                statusListener.onStatusChanged(position, isChecked);
+        // Gunakan setOnClickListener pada Switch untuk kontrol dialog yang lebih baik
+        holder.switchAlarm.setOnClickListener(v -> {
+            boolean isChecked = holder.switchAlarm.isChecked();
+            
+            if (!isChecked) {
+                // User mencoba mematikan alarm
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Matikan Alarm?")
+                        .setMessage("Apakah Anda ingin melewati alarm ini hanya untuk hari ini, atau mematikannya secara permanen?")
+                        .setCancelable(false)
+                        .setNeutralButton("Batal", (dialog, which) -> {
+                            holder.switchAlarm.setChecked(true); // Kembalikan ke ON
+                        })
+                        .setNegativeButton("Hanya Hari Ini", (dialog, which) -> {
+                            currentAlarm.setSkipped(true);
+                            currentAlarm.setActive(true);
+                            updateUiColors(holder, false);
+                            if (statusListener != null) statusListener.onStatusChanged(position, true);
+                        })
+                        .setPositiveButton("Permanen", (dialog, which) -> {
+                            currentAlarm.setSkipped(false);
+                            currentAlarm.setActive(false);
+                            updateUiColors(holder, false);
+                            if (statusListener != null) statusListener.onStatusChanged(position, false);
+                        })
+                        .show();
+            } else {
+                // User menyalakan kembali alarm
+                currentAlarm.setActive(true);
+                currentAlarm.setSkipped(false);
+                updateUiColors(holder, true);
+                if (statusListener != null) statusListener.onStatusChanged(position, true);
             }
         });
 
@@ -81,14 +109,13 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         });
     }
 
-    private void updateUiColors(AlarmViewHolder holder, boolean isActive) {
-        if (isActive) {
+    private void updateUiColors(AlarmViewHolder holder, boolean isCurrentlyOn) {
+        if (isCurrentlyOn) {
             holder.timeText.setTextColor(Color.WHITE);
             holder.categoryText.setTextColor(context.getResources().getColor(R.color.accent_cyan));
             holder.switchAlarm.setThumbTintList(android.content.res.ColorStateList.valueOf(context.getResources().getColor(R.color.accent_cyan)));
         } else {
-            // Jika nonaktif, ubah jadi merah/pudar
-            holder.timeText.setTextColor(Color.parseColor("#66FFFFFF")); // Putih pudar
+            holder.timeText.setTextColor(Color.parseColor("#66FFFFFF"));
             holder.categoryText.setTextColor(Color.RED);
             holder.switchAlarm.setThumbTintList(android.content.res.ColorStateList.valueOf(Color.RED));
         }

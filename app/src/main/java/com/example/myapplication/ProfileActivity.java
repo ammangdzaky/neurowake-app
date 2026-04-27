@@ -104,20 +104,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         String rank, desc;
         if (totalWakeups == 0) {
-            rank = "NEWBIE";
-            desc = "Start your journey tomorrow!";
+            rank = "BEBAN KELUARGA";
+            desc = "Mulai perjalanan disiplinmu besok!";
         } else if (totalWakeups < 5) {
-            rank = "STARTER";
-            desc = "Good start! Keep it up.";
+            rank = "MULAI SADAR";
+            desc = "Awal yang bagus! Pertahankan.";
         } else if (totalWakeups < 15) {
-            rank = "CONSISTENT";
-            desc = "You're building a great habit.";
+            rank = "PEJUANG SUBUH";
+            desc = "Kamu mulai membangun kebiasaan hebat.";
         } else if (totalWakeups < 30) {
-            rank = "EARLY BIRD";
-            desc = "The sun rises for you!";
+            rank = "SEPUH PAGI";
+            desc = "Matahari terbit hanya untukmu!";
         } else {
-            rank = "MASTER";
-            desc = "A true legend of discipline!";
+            rank = "LEGEND PAGI";
+            desc = "Legenda kedisiplinan yang nyata!";
         }
 
         tvBadgeTitle.setText(rank);

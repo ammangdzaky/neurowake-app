@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="COLLECTION"
+            android:text="KOLEKSI"
             android:textColor="@color/accent_cyan"
             android:textSize="12sp"
             android:letterSpacing="0.2"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Audio Library"
+            android:text="Pustaka Audio"
             android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Select multiple tracks. NeuroWake will pick one at random to wake you up."
+            android:text="Pilih beberapa lagu. NeuroWake akan memilih satu secara acak untuk membangunkanmu."
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_margin="24dp"
-            android:text="IMPORT AUDIO"
+            android:text="IMPOR AUDIO"
             android:textAllCaps="true"
             android:textColor="@color/bg_dark"
             android:textStyle="bold"

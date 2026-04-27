@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PERFORMANCE"
+            android:text="PERFORMA"
             android:textColor="@color/accent_cyan"
             android:textSize="12sp"
             android:letterSpacing="0.2"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Discipline Stats"
+            android:text="Statistik Disiplin"
             android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Wakeups"
+                    android:text="Total Bangun"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -101,15 +101,15 @@
                     android:id="@+id/tv_discipline_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Newbie"
+                    android:text="Beban"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rank Status"
+                    android:text="Status Peringkat"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -128,7 +128,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Activity Log"
+            android:text="Log Aktivitas"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -138,7 +138,7 @@
             android:id="@+id/btn_clear_logs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear All"
+            android:text="Hapus Semua"
             android:textColor="@color/accent_cyan"
             android:textSize="14sp"
             android:textStyle="bold"

@@ -52,7 +52,7 @@
             android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:hint="Your Name"
+            android:hint="Nama Anda"
             android:textColor="@color/white"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap photo to change"
+            android:text="Ketuk foto untuk mengganti"
             android:textColor="@color/text_secondary"
             android:textSize="12sp" />
     </LinearLayout>
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="CURRENT RANK"
+                android:text="PERINGKAT SAAT INI"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:letterSpacing="0.2"
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="MASTER"
+                android:text="BEBAN"
                 android:textColor="@color/accent_cyan"
                 android:textSize="32sp"
                 android:textStyle="bold" />
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="You are a morning legend!"
+                android:text="Mulai perjalanan disiplinmu besok!"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -127,7 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_margin="24dp"
-        android:text="GO TO DASHBOARD"
+        android:text="KE DASHBOARD"
         android:textColor="@color/bg_dark"
         android:textStyle="bold"
         android:textSize="16sp"
